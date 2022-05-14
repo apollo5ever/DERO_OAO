@@ -12,6 +12,10 @@ const App = () => {
   const [AOS, setAOS] = React.useState(null)
   const [address, setAddress] = React.useState(null)
   const [status, setStatus] = React.useState(null)
+  const [assetCheck, setAssetCheck] =React.useState(null)
+  const [allowance, setAllowance] = React.useState(null)
+  const [balance, setBalance] = React.useState(null)
+  const [balanceAsset, setBalanceAsset] = React.useState(null)
 
   const deroBridgeApiRef = React.useRef()
   const [bridgeInitText, setBridgeInitText] = React.useState('')
@@ -72,6 +76,33 @@ const App = () => {
             "datatype": "S",
             "value": event.target.m5.value
         }]
+    }))
+
+    console.log(err)
+    console.log(res)
+  }, [])
+
+  const withdraw = React.useCallback(async (event) => {
+    event.preventDefault();
+    const deroBridgeApi = deroBridgeApiRef.current
+    const [err, res] = await to(deroBridgeApi.wallet('start-transfer', {
+    	"scid": event.target.scid.value,
+    	"ringsize": 2,
+    	"sc_rpc": [{
+    		"name": "entrypoint",
+    		"datatype": "S",
+    		"value": "Withdraw"
+    	},
+        {
+    		"name": "asset",
+    		"datatype": "S",
+    		"value": event.target.asset.value
+    	},
+      {
+    		"name": "amount",
+    		"datatype": "U",
+    		"value": parseInt(event.target.amount.value)
+    	}]
     }))
 
     console.log(err)
@@ -284,17 +315,102 @@ const App = () => {
    
  }, []) 
 
+ const checkAllowance = React.useCallback(async (event) => {
+  event.preventDefault();
+ const deroBridgeApi = deroBridgeApiRef.current
+ const [err, res] = await to(deroBridgeApi.daemon('get-sc', {
+         scid:event.target.scid.value,
+         code:false,
+         variables:true
+ }))
+ /* let test= `data`
+ let voteStatus=res */
+ let asset = event.target.asset.value
+
+ let allowance = "weeklyAllowance_" +asset
+ let assetAllowance=res.data.result.stringkeys[allowance]/100000
+
+ setAssetCheck(asset)
+ setAllowance(assetAllowance)
+
+ 
+}, []) 
+
+
+const checkBalance = React.useCallback(async (event) => {
+  event.preventDefault();
+ const deroBridgeApi = deroBridgeApiRef.current
+ const [err, res] = await to(deroBridgeApi.daemon('get-sc', {
+         scid:event.target.scid.value,
+         code:false,
+         variables:true
+ }))
+ /* let test= `data`
+ let voteStatus=res */
+ let asset = event.target.asset.value
+ let id =0
+ asset === "DERO" ? id = "0000000000000000000000000000000000000000000000000000000000000000" : id = asset
+
+ 
+ let assetBalance=res.data.result.balances[id]/100000
+
+ setBalance(assetBalance)
+ setBalanceAsset(asset)
+
+ 
+}, []) 
+
 
   
-//---------------------------------------------------------------------------------------------------------------
+//----------------------------USER INTERFACE-----------------------------------------------------------------------------------
 
 
   return <div>
+    <h1> General Information </h1>
     <div>{bridgeInitText}</div>
+
+    <h3>Check Contract Balance</h3>
+    <h4>Balance is {balance} {balanceAsset}</h4>
+    <form onSubmit={checkBalance}>
+      <p>SCID</p>
+      <input id="scid" type="text"/>
+      <p>Asset</p>
+      <input id="asset" type="text"/>
+      <button type={"submit"}>Check Balance</button>
+    </form>
+
     <div><h3>Vacant Seats</h3>
     <h4>{vacant}</h4>
+  <form onSubmit={checkVacancy}>
+    <p>SCID</p>
+    <input id="scid" type="text" />
+    <button type={"submit"}>Check Vacancy</button>
+  </form>
     </div>
-  
+
+    <h3> Check Vote</h3>
+  <p> Motion to {type === 0 ? "hire "+ address +" as new CEO": type === 1 ? "fire CEO": type === 2 ? "add "+ address +" as board member "+ AOS : type === 3? "remove " +address +" from seat " +AOS : "set weekly allowance of " +address +" to "+ AOS}
+{status === 0? ": Open" : status === 1 ? ": Passed" : status === 2? ": Rejected": ""}</p>
+  <form onSubmit={checkVote}>
+    <p>SCID</p>
+    <input id="scid" type="text" />
+    <p>Vote Index</p>
+    <input id="index" type="text" />
+    <button type={"submit"}>Check Vote</button>
+  </form>
+
+  <h3> Check Weekly Allowance</h3>
+  <p>Allowance for {assetCheck} is {allowance}</p>
+  <form onSubmit={checkAllowance}>
+    <p>SCID</p>
+    <input id="scid" type="text" />
+    <p>Asset</p>
+    <input id="asset" type="text" />
+    <button type={"submit"}>Check Allowance</button>
+  </form>
+
+ 
+<h1> CEO Functions </h1>
     <h3> Appoint Five Board Members </h3>
     <form onSubmit={appoint}>
       <p>SCID </p>
@@ -312,16 +428,35 @@ const App = () => {
     	<button type={"submit"}>Appoint</button>
     </form>
 
+    <h3> Withdraw Funds </h3> 
+    <form onSubmit={withdraw}>
+      <p>SCID</p>
+      <input id="scid" type="text" />
+      <p>Asset</p>
+      <input id="asset" type="text" />
+      <p>Amount</p>
+      <input id="amount" type="text" />
+      <button type={"submit"}>Withdraw</button>
+    </form>
 
+
+
+    <h1> Board Functions </h1>
     <h3> Open Vote </h3>
     <form onSubmit={openVote}>
       <p>SCID </p>
       <input id="scid" type="text" />
     	<p>Motion </p>
-    	<input id="motion" type="text" />
-    	<p>Address </p>
+      <select id="motion" name="motion">
+        <option value="0">Hire CEO</option>
+        <option value="1">Fire CEO</option>
+        <option value="2">Add Board Member</option>
+        <option value="3">Remove Board Member</option>
+        <option value="4">Set CEO's Weekly Allowance</option>
+        </select>
+    	<p>Asset SCID or CEO Address </p>
     	<input id="address" type="text" />
-    	<p>Amount or Seat </p>
+    	<p>Allowance Amount or Board Seat ID </p>
     	<input id="aos" type="text" />
     	<button type={"submit"}>Open Vote</button>
     </form>
@@ -347,7 +482,6 @@ const App = () => {
       <input id="scid" type="text" />
       <p>Vote Index</p>
       <input id="voteIndex" type="text"/>
-      <p>Voter ID </p>
       <button type={"submit"}>Close Vote</button>
     </form>
     
@@ -363,26 +497,11 @@ const App = () => {
   </form>
 
 
-  <h3> Check Vacancy</h3>
-  <form onSubmit={checkVacancy}>
-    <p>SCID</p>
-    <input id="scid" type="text" />
-    <button type={"submit"}>Check Vacancy</button>
-  </form>
+  
 
-  <h3> Check Vote</h3>
-  <form onSubmit={checkVote}>
-    <p>SCID</p>
-    <input id="scid" type="text" />
-    <p>Vote Index</p>
-    <input id="index" type="text" />
-    <button type={"submit"}>Check Vote</button>
-  </form>
 
-<h4>Status</h4>
-{status === 0? "Open" : status === 1 ? "Motion Passed" : status === 2? "Motion Rejected": ""}
-<h4>Motion</h4>
-<p> Motion to {type === 0 ? "hire "+ address +" as new CEO": type === 1 ? "fire CEO": type === 2 ? "add "+ address +" as board member "+ AOS : type === 3? "remove " +address +" from seat " +AOS : "set weekly allowance of " +address +" to "+ AOS}</p>
+
+
 
 
 <h3> Transfer Seat</h3>
@@ -393,7 +512,7 @@ const App = () => {
     <p>Seat ID</p>
     <input id="id" type="text" />
 
-    <p>SAddress</p>
+    <p>Address</p>
     <input id="address" type="text" />
 
     <button type={"submit"}>Transfer Seat</button>
