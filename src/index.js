@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import FormDataComponent from './form-data.component';
+import App2 from './App2';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

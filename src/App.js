@@ -16,6 +16,7 @@ const App = () => {
   const [allowance, setAllowance] = React.useState(null)
   const [balance, setBalance] = React.useState(null)
   const [balanceAsset, setBalanceAsset] = React.useState(null)
+  const [view, changeView] =React.useState(null)
 
   const deroBridgeApiRef = React.useRef()
   const [bridgeInitText, setBridgeInitText] = React.useState('')
@@ -361,13 +362,33 @@ const checkBalance = React.useCallback(async (event) => {
 }, []) 
 
 
+const setView = React.useCallback(async (event) => {
+  event.preventDefault();
+  changeView(event.target.view.value)
+  console.log(event.target.view.value)
+})
+
   
 //----------------------------USER INTERFACE-----------------------------------------------------------------------------------
 
 
   return <div>
-    <h1> General Information </h1>
+    
     <div>{bridgeInitText}</div>
+    <h1>Optimal Autonomous Organization</h1>
+            <p>This is an interface for your OAO. What are you here to do?</p>
+            <form onSubmit={setView}>
+                <select id="view" name="view">
+                    <option value="generalInformation"> General Information & Deposit </option>
+                    <option value="CEO"> CEO Functions</option>
+                    <option value="Board"> Board Member Functions </option>
+                </select>               
+                <button type={"submit"}>Select</button>
+            </form>
+
+            {view === "generalInformation"?<div>
+            
+            <h1> General Information & Deposit </h1>
 
     <h3>Check Contract Balance</h3>
     <h4>Balance is {balance} {balanceAsset}</h4>
@@ -409,8 +430,26 @@ const checkBalance = React.useCallback(async (event) => {
     <button type={"submit"}>Check Allowance</button>
   </form>
 
- 
-<h1> CEO Functions </h1>
+  <h3>Deposit</h3>
+  <form onSubmit={deposit}>
+    <p>SCID</p>
+    <input id="scid" type="text"/>
+    <p>Amount</p>
+    <input id="amount" type="text"/>
+    <button type={"submit"}>Deposit</button>
+  </form>
+  </div>
+            
+            
+            
+            
+            
+            
+            
+            : view==="CEO"? 
+            <div>
+            
+            <h1> CEO Functions </h1>
     <h3> Appoint Five Board Members </h3>
     <form onSubmit={appoint}>
       <p>SCID </p>
@@ -438,9 +477,12 @@ const checkBalance = React.useCallback(async (event) => {
       <input id="amount" type="text" />
       <button type={"submit"}>Withdraw</button>
     </form>
+    </div>
+    : view === "Board"? 
+    
+    <div>
 
-
-
+    
     <h1> Board Functions </h1>
     <h3> Open Vote </h3>
     <form onSubmit={openVote}>
@@ -487,22 +529,10 @@ const checkBalance = React.useCallback(async (event) => {
     
   
 
-  <h3>Deposit</h3>
-  <form onSubmit={deposit}>
-    <p>SCID</p>
-    <input id="scid" type="text"/>
-    <p>Amount</p>
-    <input id="amount" type="text"/>
-    <button type={"submit"}>Deposit</button>
-  </form>
+ 
 
 
   
-
-
-
-
-
 
 <h3> Transfer Seat</h3>
   <form onSubmit={transferSeat}>
@@ -517,6 +547,22 @@ const checkBalance = React.useCallback(async (event) => {
 
     <button type={"submit"}>Transfer Seat</button>
   </form>
+
+  </div>
+    
+    
+    :""}
+    
+
+ 
+
+
+
+  
+  
+
+  <footer>Support by sending dero to "apollo"</footer>
+
   </div>
 }
 
