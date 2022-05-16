@@ -397,7 +397,7 @@ const setView = React.useCallback(async (event) => {
     <h3>Check Contract Balance</h3>
     <h4>Balance is {balance} {balanceAsset}</h4>
     <form onSubmit={checkBalance}>
-      <p>SCID</p>
+      <p>Your OAO Contract's SCID</p>
       <input id="scid" type="text"/>
       <p>Asset</p>
       <input id="asset" type="text"/>
@@ -409,7 +409,7 @@ const setView = React.useCallback(async (event) => {
     <h3>Vacant Seats</h3>
     <h4>{vacant}</h4>
   <form onSubmit={checkVacancy}>
-    <p>SCID</p>
+    <p>Your OAO Contract's SCID</p>
     <input id="scid" type="text" />
     <button type={"submit"}>Check Vacancy</button>
   </form>
@@ -421,7 +421,7 @@ const setView = React.useCallback(async (event) => {
   <p> Motion to {type === 0 ? "hire "+ address +" as new CEO": type === 1 ? "fire CEO": type === 2 ? "add "+ address +" as board member "+ AOS : type === 3? "remove " +address +" from seat " +AOS : "set weekly allowance of " +address +" to "+ AOS}
 {status === 0? ": Open" : status === 1 ? ": Passed" : status === 2? ": Rejected": ""}</p>
   <form onSubmit={checkVote}>
-    <p>SCID</p>
+    <p>Your OAO Contract's SCID</p>
     <input id="scid" type="text" />
     <p>Vote Index</p>
     <input id="index" type="text" />
@@ -433,7 +433,7 @@ const setView = React.useCallback(async (event) => {
   <h3> Check Weekly Allowance</h3>
   <p>Allowance for {assetCheck} is {allowance}</p>
   <form onSubmit={checkAllowance}>
-    <p>SCID</p>
+    <p>Your OAO Contract's SCID</p>
     <input id="scid" type="text" />
     <p>Asset</p>
     <input id="asset" type="text" />
@@ -444,7 +444,7 @@ const setView = React.useCallback(async (event) => {
 <div className="function">
   <h3>Deposit</h3>
   <form onSubmit={deposit}>
-    <p>SCID</p>
+    <p>Your OAO Contract's SCID</p>
     <input id="scid" type="text"/>
     <p>Amount</p>
     <input id="amount" type="text"/>
@@ -467,7 +467,7 @@ const setView = React.useCallback(async (event) => {
             <div className="function">
     <h3> Appoint Five Board Members </h3>
     <form onSubmit={appoint}>
-      <p>SCID </p>
+      <p>Your OAO Contract's SCID </p>
       <input id="scid" type="text" />
     	<p>Member 1 </p>
     	<input id="m1" type="text" />
@@ -486,7 +486,7 @@ const setView = React.useCallback(async (event) => {
     <div className="function">
     <h3> Withdraw Funds </h3> 
     <form onSubmit={withdraw}>
-      <p>SCID</p>
+      <p>Your OAO Contract's SCID</p>
       <input id="scid" type="text" />
       <p>Asset</p>
       <input id="asset" type="text" />
@@ -506,7 +506,7 @@ const setView = React.useCallback(async (event) => {
     <div className="function">
     <h3> Open Vote </h3>
     <form onSubmit={openVote}>
-      <p>SCID </p>
+      <p>Your OAO Contract's SCID </p>
       <input id="scid" type="text" />
     	<p>Motion </p>
       <select id="motion" name="motion">
@@ -527,7 +527,7 @@ const setView = React.useCallback(async (event) => {
     <div className="function">
     <h3> Cast Vote</h3>
     <form onSubmit={castVote}>
-      <p>SCID</p>
+      <p>Your OAO Contract's SCID</p>
       <input id="scid" type="text" />
       <p>Vote Index</p>
       <input id="voteIndex" type="text"/>
@@ -544,7 +544,7 @@ const setView = React.useCallback(async (event) => {
   <div className="function">
     <h3> Close Vote</h3>
     <form onSubmit={closeVote}>
-      <p>SCID</p>
+      <p>Your OAO Contract's SCID</p>
       <input id="scid" type="text" />
       <p>Vote Index</p>
       <input id="voteIndex" type="text"/>
@@ -560,7 +560,7 @@ const setView = React.useCallback(async (event) => {
 <div className="function">
 <h3> Transfer Seat</h3>
   <form onSubmit={transferSeat}>
-    <p>SCID</p>
+    <p>Your OAO Contract's SCID</p>
     <input id="scid" type="text" />
 
     <p>Seat ID</p>
@@ -587,7 +587,7 @@ const setView = React.useCallback(async (event) => {
   
 
   <footer>Support by sending dero to "apollo"</footer>
-  <a href="https://github.com/apollo5ever/DERO_OAO">Github (smart contract found here)</a>
+  <a href="https://github.com/apollo5ever/DERO_OAO">Github (smart contract found here)</a> <a href="https://graymirror.substack.com/p/optimal-autonomous-organizations?s=r">What is an Optimal Autonomous Organization?</a>
 
   </div>
 }
