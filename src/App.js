@@ -17,9 +17,10 @@ const App = () => {
   const [balance, setBalance] = React.useState(null)
   const [balanceAsset, setBalanceAsset] = React.useState(null)
   const [view, changeView] =React.useState(null)
+  
 
   const deroBridgeApiRef = React.useRef()
-  const [bridgeInitText, setBridgeInitText] = React.useState('')
+  const [bridgeInitText, setBridgeInitText] = React.useState('Not connected to extension')
 
   React.useEffect(() => {
     const load = async () => {
@@ -354,6 +355,7 @@ const checkBalance = React.useCallback(async (event) => {
 
  
  let assetBalance=res.data.result.balances[id]/100000
+ 
 
  setBalance(assetBalance)
  setBalanceAsset(asset)
@@ -382,7 +384,7 @@ const setView = React.useCallback(async (event) => {
                     <option value="generalInformation"> General Information & Deposit </option>
                     <option value="CEO"> CEO Functions</option>
                     <option value="Board"> Board Member Functions </option>
-                </select>               
+                </select>           
                 <button type={"submit"}>Select</button>
             </form>
 
