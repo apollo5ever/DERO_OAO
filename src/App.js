@@ -4,6 +4,7 @@ import DeroBridgeApi from './api.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import to from 'await-to-js'
+import './app.css'
 
 const App = () => {
 
@@ -388,10 +389,11 @@ const setView = React.useCallback(async (event) => {
                 <button type={"submit"}>Select</button>
             </form>
 
-            {view === "generalInformation"?<div>
+            {view === "generalInformation"?<div className="main">
             
             <h1> General Information & Deposit </h1>
 
+            <div className="function">
     <h3>Check Contract Balance</h3>
     <h4>Balance is {balance} {balanceAsset}</h4>
     <form onSubmit={checkBalance}>
@@ -401,16 +403,20 @@ const setView = React.useCallback(async (event) => {
       <input id="asset" type="text"/>
       <button type={"submit"}>Check Balance</button>
     </form>
+    </div>
 
-    <div><h3>Vacant Seats</h3>
+    <div className="function">
+    <h3>Vacant Seats</h3>
     <h4>{vacant}</h4>
   <form onSubmit={checkVacancy}>
     <p>SCID</p>
     <input id="scid" type="text" />
     <button type={"submit"}>Check Vacancy</button>
   </form>
+    
     </div>
 
+    <div className="function">
     <h3> Check Vote</h3>
   <p> Motion to {type === 0 ? "hire "+ address +" as new CEO": type === 1 ? "fire CEO": type === 2 ? "add "+ address +" as board member "+ AOS : type === 3? "remove " +address +" from seat " +AOS : "set weekly allowance of " +address +" to "+ AOS}
 {status === 0? ": Open" : status === 1 ? ": Passed" : status === 2? ": Rejected": ""}</p>
@@ -421,7 +427,9 @@ const setView = React.useCallback(async (event) => {
     <input id="index" type="text" />
     <button type={"submit"}>Check Vote</button>
   </form>
+  </div>
 
+  <div className="function">
   <h3> Check Weekly Allowance</h3>
   <p>Allowance for {assetCheck} is {allowance}</p>
   <form onSubmit={checkAllowance}>
@@ -431,7 +439,9 @@ const setView = React.useCallback(async (event) => {
     <input id="asset" type="text" />
     <button type={"submit"}>Check Allowance</button>
   </form>
+  </div>
 
+<div className="function">
   <h3>Deposit</h3>
   <form onSubmit={deposit}>
     <p>SCID</p>
@@ -440,6 +450,8 @@ const setView = React.useCallback(async (event) => {
     <input id="amount" type="text"/>
     <button type={"submit"}>Deposit</button>
   </form>
+  </div>
+
   </div>
             
             
@@ -452,6 +464,7 @@ const setView = React.useCallback(async (event) => {
             <div>
             
             <h1> CEO Functions </h1>
+            <div className="function">
     <h3> Appoint Five Board Members </h3>
     <form onSubmit={appoint}>
       <p>SCID </p>
@@ -468,7 +481,9 @@ const setView = React.useCallback(async (event) => {
     	<input id="m5" type="text" />
     	<button type={"submit"}>Appoint</button>
     </form>
+    </div>
 
+    <div className="function">
     <h3> Withdraw Funds </h3> 
     <form onSubmit={withdraw}>
       <p>SCID</p>
@@ -479,6 +494,8 @@ const setView = React.useCallback(async (event) => {
       <input id="amount" type="text" />
       <button type={"submit"}>Withdraw</button>
     </form>
+  </div>
+
     </div>
     : view === "Board"? 
     
@@ -486,6 +503,7 @@ const setView = React.useCallback(async (event) => {
 
     
     <h1> Board Functions </h1>
+    <div className="function">
     <h3> Open Vote </h3>
     <form onSubmit={openVote}>
       <p>SCID </p>
@@ -504,7 +522,9 @@ const setView = React.useCallback(async (event) => {
     	<input id="aos" type="text" />
     	<button type={"submit"}>Open Vote</button>
     </form>
+    </div>
 
+    <div className="function">
     <h3> Cast Vote</h3>
     <form onSubmit={castVote}>
       <p>SCID</p>
@@ -519,7 +539,9 @@ const setView = React.useCallback(async (event) => {
       </select>
       <button type={"submit"}>Cast Vote</button>
     </form>
+    </div>
 
+  <div className="function">
     <h3> Close Vote</h3>
     <form onSubmit={closeVote}>
       <p>SCID</p>
@@ -529,13 +551,13 @@ const setView = React.useCallback(async (event) => {
       <button type={"submit"}>Close Vote</button>
     </form>
     
-  
+  </div>
 
  
 
 
   
-
+<div className="function">
 <h3> Transfer Seat</h3>
   <form onSubmit={transferSeat}>
     <p>SCID</p>
@@ -549,6 +571,7 @@ const setView = React.useCallback(async (event) => {
 
     <button type={"submit"}>Transfer Seat</button>
   </form>
+  </div>
 
   </div>
     
@@ -564,6 +587,7 @@ const setView = React.useCallback(async (event) => {
   
 
   <footer>Support by sending dero to "apollo"</footer>
+  <a href="https://github.com/apollo5ever/DERO_OAO">Github (smart contract found here)</a>
 
   </div>
 }
