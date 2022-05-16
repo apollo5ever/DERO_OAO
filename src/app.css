@@ -13,3 +13,8 @@ div {
    border-style:inset;
    border-color:blue;
 }
+
+a {
+    margin:30px;
+    background:rgb(238, 234, 173)
+}

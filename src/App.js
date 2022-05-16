@@ -587,7 +587,7 @@ const setView = React.useCallback(async (event) => {
   
 
   <footer>Support by sending dero to "apollo"</footer>
-  <a href="https://github.com/apollo5ever/DERO_OAO">Github (smart contract found here)</a> <a href="https://graymirror.substack.com/p/optimal-autonomous-organizations?s=r">What is an Optimal Autonomous Organization?</a>
+  <a href="https://chrome.google.com/webstore/detail/dero-rpc-bridge/nmofcfcaegdplgbjnadipebgfbodplpd">Download DERO RPC Bridge Extension</a><a href="https://github.com/apollo5ever/DERO_OAO">Github (smart contract found here)</a> <a href="https://graymirror.substack.com/p/optimal-autonomous-organizations?s=r">What is an Optimal Autonomous Organization?</a>
 
   </div>
 }
